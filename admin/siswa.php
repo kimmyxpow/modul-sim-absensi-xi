@@ -146,8 +146,6 @@ if (isset($_POST['ubah'])) {
                   <?php } ?>
                </select>
                <select name="bln" required>
-                  <option value="<?= $blns; ?>"><?= $blns; ?></option>
-                  <option value=""></option>
                   <?php for ($bln = 1; $bln < 12; $bln++) { ?>
                      <?php $selected = ($bln == $blns) ? 'selected' : ''; ?>
                      <?php if ($bln <= 9) { ?>
