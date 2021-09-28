@@ -1,7 +1,5 @@
 <?php
 
-@session_start();
-
 include "../config/database.php";
 
 $tampil = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM query_siswa WHERE nis = '$_SESSION[username]'"));
@@ -47,7 +45,7 @@ if (isset($_POST['ubah'])) {
     <table align="center">
         <tr>
             <td></td>
-            <td><img src="../foto/<?php echo $tampil['foto'] ?>" border="5" height="175" width="155"></td>
+            <td><img src="../foto/<?= $tampil['foto'] ?>" border="5" height="175" width="155"></td>
             <td></td>
         </tr>
     </table>
@@ -55,19 +53,19 @@ if (isset($_POST['ubah'])) {
         <tr>
             <td>NIS</td>
             <td>:</td>
-            <td><?php echo $tampil['nis'] ?></td>
+            <td><?= $tampil['nis'] ?></td>
         </tr>
         <tr>
             <td>Nama</td>
             <td>:</td>
-            <td><input type="text" name="nama" value="<?php echo $tampil['nama'] ?>"></td>
+            <td><input type="text" name="nama" value="<?= $tampil['nama'] ?>"></td>
         </tr>
         <tr>
             <td>Kelamin</td>
             <td>:</td>
             <td>
-                <input type="radio" name="jk" value="L" <?php echo $l ?> />Laki-laki
-                <input type="radio" name="jk" value="P" <?php echo $p ?> />Perempuan
+                <input type="radio" name="jk" value="L" <?= $l ?> />Laki-laki
+                <input type="radio" name="jk" value="P" <?= $p ?> />Perempuan
             </td>
         </tr>
         <tr>
@@ -75,15 +73,13 @@ if (isset($_POST['ubah'])) {
             <td>:</td>
             <td>
                 <select name="rayon" id="">
-                    <option value="<?php echo $tampil['id_rayon'] ?>"><?php echo $tampil['rayon']; ?></option>
                     <?php
                     $E = mysqli_query($conn, "SELECT * FROM tbl_rayon");
                     while ($r = mysqli_fetch_array($E)) {
+                        $selected = ($r[0] == $tampil['id_rayon']) ? 'selected' : '';
                     ?>
-                        <option value="<?php echo $r[0] ?>"><?php echo $r[1] ?></option>
-                    <?php
-                    }
-                    ?>
+                        <option value="<?= $r[0] ?>" <?= $selected; ?>><?= $r[1] ?></option>
+                    <?php } ?>
                 </select>
             </td>
         </tr>
@@ -92,12 +88,12 @@ if (isset($_POST['ubah'])) {
             <td>:</td>
             <td>
                 <select name="rombel" id="">
-                    <option value="<?php echo $tampil['id_rombel'] ?>"><?php echo $tampil['rombel']; ?></option>
                     <?php
                     $E = mysqli_query($conn, "SELECT * FROM tbl_rombel");
                     while ($r = mysqli_fetch_array($E)) {
+                        $selected = ($r[0] == $tampil['id_rombel']) ? 'selected' : '';
                     ?>
-                        <option value="<?php echo $r[0] ?>"><?php echo $r[1] ?></option>
+                        <option value="<?= $r[0] ?>" <?= $selected; ?>><?= $r[1] ?></option>
                     <?php
                     }
                     ?>
@@ -109,45 +105,45 @@ if (isset($_POST['ubah'])) {
             <td>:</td>
             <td>
                 <select name="tgl" id="">
-                    <option value="<?php echo $tgl; ?>"><?php echo $tgl; ?></option>
+                    <option value="<?= $tgl; ?>"><?= $tgl; ?></option>
                     <option value="">-------</option>
                     <?php
                     for ($tgl = 1; $tgl <= 31; $tgl++) {
                         if ($tgl <= 9) {
                     ?>
-                            <option value="<?php echo "0" . $tgl; ?>"><?php echo "0" . $tgl; ?></option>
+                            <option value="<?= "0" . $tgl; ?>"><?= "0" . $tgl; ?></option>
                         <?php
                         } else {
                         ?>
-                            <option value="<?php echo $tgl; ?>"><?php echo $tgl; ?></option>
+                            <option value="<?= $tgl; ?>"><?= $tgl; ?></option>
                     <?php
                         }
                     }
                     ?>
                 </select>
                 <select name="bln" id="">
-                    <option value="<?php echo $bln; ?>"><?php echo $bln; ?></option>
+                    <option value="<?= $bln; ?>"><?= $bln; ?></option>
                     <option value="">-------</option>
                     <?php
                     for ($bln = 1; $bln <= 12; $bln++) {
                         if ($bln <= 9) {
                     ?>
-                            <option value="<?php echo "0" . $bln; ?>"><?php echo "0" . $bln; ?></option>
+                            <option value="<?= "0" . $bln; ?>"><?= "0" . $bln; ?></option>
                         <?php
                         } else { ?>
-                            <option value="<?php echo $bln; ?>"><?php echo $bln; ?></option>
+                            <option value="<?= $bln; ?>"><?= $bln; ?></option>
                     <?php
                         }
                     }
                     ?>
                 </select>
                 <select name="thn" id="">
-                    <option value="<?php echo $thn; ?>"><?php echo $thn; ?></option>
+                    <option value="<?= $thn; ?>"><?= $thn; ?></option>
                     <option value="">-------</option>
                     <?php
                     for ($thn = 1990; $thn <= 2012; $thn++) {
                     ?>
-                        <option value="<?php echo $thn; ?>"><?php echo $thn; ?></option>
+                        <option value="<?= $thn; ?>"><?= $thn; ?></option>
                     <?php
                     }
                     ?>

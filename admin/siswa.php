@@ -44,9 +44,9 @@ if (isset($_GET['edit'])) {
    }
 
    $date = explode("-", $edit['tgl_lahir']);
-   $thn = $date[0];
-   $bln = $date[1];
-   $tgl = $date[2];
+   $thns = $date[0];
+   $blns = $date[1];
+   $tgls = $date[2];
 }
 
 if (isset($_POST['ubah'])) {
@@ -105,10 +105,10 @@ if (isset($_POST['ubah'])) {
             <td> : </td>
             <td>
                <select name="rayon" required>
-                  <option value="<?= $edit['id_rayon']; ?>"><?= $edit['rayon']; ?></option>
                   <?php $a = $perintah->tampil("tbl_rayon"); ?>
                   <?php foreach ($a as $r) { ?>
-                     <option value="<?= $r["id_rayon"]; ?>"><?= $r["rayon"]; ?></option>
+                     <?php $selected = ($r["id_rayon"] == $edit['id_rayon']) ? 'selected' : ''; ?>
+                     <option value="<?= $r["id_rayon"]; ?>" <?= $selected; ?>><?= $r["rayon"]; ?></option>
                   <?php } ?>
                </select>
             </td>
@@ -118,9 +118,9 @@ if (isset($_POST['ubah'])) {
             <td> : </td>
             <td>
                <select name="rombel" required>
-                  <option value="<?= $edit['id_rombel']; ?>"><?= $edit['rombel']; ?></option>
                   <?php $a = $perintah->tampil("tbl_rombel"); ?>
                   <?php foreach ($a as $r) { ?>
+                     <?php $selected = ($r["id_rombel"] == $edit['id_rayon']) ? 'selected' : ''; ?>
                      <option value="<?= $r["id_rombel"]; ?>"><?= $r["rombel"]; ?></option>
                   <?php } ?>
                </select>
@@ -136,31 +136,30 @@ if (isset($_POST['ubah'])) {
             <td> : </td>
             <td>
                <select name="tgl" required>
-                  <option value="<?= $tgl; ?>"><?= $tgl; ?></option>
-                  <option value=""></option>
                   <?php for ($tgl = 1; $tgl < 31; $tgl++) { ?>
+                     <?php $selected = ($tgl == $tgls) ? 'selected' : ''; ?>
                      <?php if ($tgl <= 9) { ?>
-                        <option value="<?= "0{$tgl}"; ?>"><?= "0{$tgl}"; ?></option>
+                        <option value="<?= "0{$tgl}"; ?>" <?= $selected; ?>><?= "0{$tgl}"; ?></option>
                      <?php } else { ?>
-                        <option value="<?= $tgl; ?>"><?= $tgl; ?></option>
+                        <option value="<?= $tgl; ?>" <?= $selected; ?>><?= $tgl; ?></option>
                      <?php } ?>
                   <?php } ?>
                </select>
                <select name="bln" required>
-                  <option value="<?= $bln; ?>"><?= $bln; ?></option>
+                  <option value="<?= $blns; ?>"><?= $blns; ?></option>
                   <option value=""></option>
                   <?php for ($bln = 1; $bln < 12; $bln++) { ?>
+                     <?php $selected = ($bln == $blns) ? 'selected' : ''; ?>
                      <?php if ($bln <= 9) { ?>
-                        <option value="<?= "0{$bln}"; ?>"><?= "0{$bln}"; ?></option>
+                        <option value="<?= "0{$bln}"; ?>" <?= $selected; ?>><?= "0{$bln}"; ?></option>
                      <?php } else { ?>
-                        <option value="<?= $bln; ?>"><?= $bln; ?></option>
+                        <option value="<?= $bln; ?>" <?= $selected; ?>><?= $bln; ?></option>
                      <?php } ?>
                   <?php } ?>
                </select>
                <select name="thn" required>
-                  <option value="<?= $thn; ?>"><?= $thn; ?></option>
-                  <option value=""></option>
                   <?php for ($thn = 1989; $thn < 2025; $thn++) { ?>
+                     <?php $selected = ($thn == $thns) ? 'selected' : ''; ?>
                      <option value="<?= $thn; ?>"><?= $thn; ?></option>
                   <?php } ?>
                </select>

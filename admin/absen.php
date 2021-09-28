@@ -22,7 +22,6 @@ if (isset($_GET['rombel'])) {
       <td>:</td>
       <td>
         <select name="rombel" id="">
-          <option value="<?= $isinya['id_rombel'] ?>"><?= $isinya['rombel'] ?></option>
           <?php $a = $perintah->tampil("tbl_rombel"); ?>
           <?php foreach ($a as $r) { ?>
             <option value="<?= $r['id_rombel'] ?>"><?= $r['rombel'] ?></option>
