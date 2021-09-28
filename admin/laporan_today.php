@@ -1,9 +1,10 @@
 <?php
-    include "../config/database.php";
+include "../config/database.php";
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,15 +16,18 @@
             border: thin solid #000;
             width: 700px;
         }
+
         .print {
             margin: 0 auto;
             width: 700px;
         }
+
         a {
             text-decoration: none;
         }
     </style>
 </head>
+
 <body>
 
     <a href="#" onClick="document.getElementById('print').style.display='none'; window.print();">
@@ -39,16 +43,20 @@
                 <td width="93%" valign="top">
                     <strong>&nbsp; LAPORAN KEHADIRAN</strong>
                 </td>
-                <tr>
-                    <td valign="top">&nbsp; SMK Wikrama Kota Bogor</td>
-                </tr>
-                <tr>
-                    <td valign="top">&nbsp; Ilmu yang Amaliah, Amal yang Ilmiah, Akhlakul Karimah</td>
-                </tr>
+            <tr>
+                <td valign="top">&nbsp; SMK Wikrama Kota Bogor</td>
+            </tr>
+            <tr>
+                <td valign="top">&nbsp; Ilmu yang Amaliah, Amal yang Ilmiah, Akhlakul Karimah</td>
+            </tr>
             </tr>
         </table>
         <table width="100%">
-            <tr><td><hr></td></tr>
+            <tr>
+                <td>
+                    <hr>
+                </td>
+            </tr>
         </table>
         <table cellspacing="1" align="center" border="1">
             <tr align="center">
@@ -67,7 +75,10 @@
                 <td width="25">A</td>
             </tr>
             <?php
-                $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM query_absen"));
+            $data = mysqli_query($conn, "SELECT * FROM query_absen");
+            ?>
+            <?php if (mysqli_num_rows($data) != 0) {
+                $data = mysqli_fetch_assoc($data);
                 $bulan_sekarang_db = $data['tgl_absen'];
                 $ambil_bulan = substr($bulan_sekarang_db, 5, 2);
                 $bulan_sekarang = date('Y-m-d');
@@ -80,23 +91,26 @@
                 while ($r = mysqli_fetch_array($sql)) {
                     $no++;
             ?>
-            <tr align="center">
-                <td><?php echo $no ?></td>
-                <td><?php echo $r['nis'] ?></td>
-                <td><?php echo $r['nama'] ?></td>
-                <td><?php echo $r['rombel'] ?></td>
-                <td><?php echo $r['hadir'] ?></td>
-                <td><?php echo $r['sakit'] ?></td>
-                <td><?php echo $r['izin'] ?></td>
-                <td><?php echo $r['alpa'] ?></td>
-                <td><?php echo date('M') ?></td>
-                <td>
-                    <a target="_blank" href="laporan_rombel_detil.php?rombel><?php echo $r['id_rombel'] ?>&nis=<?php echo $r['nis'] ?>&tgl=<?php echo $r['tgl_absen'] ?>">Detail</a>
-                </td>
-            </tr>
-            <?php
-                }
-            ?>
+                    <tr align="center">
+                        <td><?php echo $no ?></td>
+                        <td><?php echo $r['nis'] ?></td>
+                        <td><?php echo $r['nama'] ?></td>
+                        <td><?php echo $r['rombel'] ?></td>
+                        <td><?php echo $r['hadir'] ?></td>
+                        <td><?php echo $r['sakit'] ?></td>
+                        <td><?php echo $r['izin'] ?></td>
+                        <td><?php echo $r['alpa'] ?></td>
+                        <td><?php echo date('M') ?></td>
+                        <td>
+                            <a target="_blank" href="laporan_rombel_detil.php?rombel><?php echo $r['id_rombel'] ?>&nis=<?php echo $r['nis'] ?>&tgl=<?php echo $r['tgl_absen'] ?>">Detail</a>
+                        </td>
+                    </tr>
+                <?php } ?>
+            <?php } else { ?>
+                <tr>
+                    <td colspan="10">No Record</td>
+                </tr>
+            <?php } ?>
         </table>
         <br>
     </div>
@@ -106,4 +120,5 @@
     </center>
 
 </body>
+
 </html>
