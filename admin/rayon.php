@@ -16,7 +16,7 @@ if (isset($_POST['simpan'])) {
   $perintah->simpan($table, $field, $redirect);
 }
 
-if (isset($_POST['hapus'])) {
+if (isset($_GET['hapus'])) {
   $perintah->hapus($table, $where, $redirect);
 }
 
