@@ -1,6 +1,6 @@
 <?php
 
-require "../config/database.php";
+require "../library/controllers.php";
 
 $perintah = new oop();
 
