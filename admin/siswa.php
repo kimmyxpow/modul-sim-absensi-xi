@@ -6,14 +6,14 @@ $perintah = new oop();
 
 $table = "tbl_siswa";
 $query = "query_siswa";
+$redirect = "?menu=siswa";
+$tempat = "../foto";
+
 if (isset($_GET['id'])) {
    $where = "nis = {$_GET['id']}";
 }
-$redirect = "?menu=siswa";
 
-$tempat = "../foto";
-
-if (isset($POST['simpan'])) {
+if (isset($_POST['simpan'])) {
    $tanggal = $_POST['thn'] . "-" . $_POST['bln'] . "-" . $_POST['tgl'];
    $foto = $_FILES['foto'];
    $upload = $perintah->upload($foto, $tempat);
@@ -79,101 +79,109 @@ if (isset($_POST['ubah'])) {
 
 ?>
 
-<?php if (isset($_GET['edit'])) { ?>
-   <form method="post" enctype="multipart/form-data" action="">
-      <table align="center">
-         <tr>
-            <td>NIS</td>
-            <td> : </td>
-            <td><input type="text" name="nis" value="<?= $edit['nis']; ?>" required></td>
-         </tr>
-         <tr>
-            <td>Nama</td>
-            <td> : </td>
-            <td><input type="text" name="nama" value="<?= $edit['nama']; ?>" required></td>
-         </tr>
-         <tr>
-            <td>Jenis Kelamin</td>
-            <td> : </td>
-            <td>
-               <input type="radio" name="jk" require value="L" <?= $l; ?>>Laki-laki
-               <input type="radio" name="jk" require value="P" <?= $p; ?>>Perempuan
-            </td>
-         </tr>
-         <tr>
-            <td>Rayon</td>
-            <td> : </td>
-            <td>
-               <select name="rayon" required>
-                  <?php $a = $perintah->tampil("tbl_rayon"); ?>
-                  <?php foreach ($a as $r) { ?>
+<form method="post" enctype="multipart/form-data" action="">
+   <table align="center">
+      <tr>
+         <td>NIS</td>
+         <td> : </td>
+         <td><input type="text" name="nis" value="<?= (isset($_GET['edit'])) ? $edit['nis'] : ''; ?>" required></td>
+      </tr>
+      <tr>
+         <td>Nama</td>
+         <td> : </td>
+         <td><input type="text" name="nama" value="<?= (isset($_GET['edit'])) ? $edit['nama'] : ''; ?>" required></td>
+      </tr>
+      <tr>
+         <td>Jenis Kelamin</td>
+         <td> : </td>
+         <td>
+            <input type="radio" name="jk" require value="L" <?= (isset($_GET['edit'])) ? $l : ''; ?>>Laki-laki
+            <input type="radio" name="jk" require value="P" <?= (isset($_GET['edit'])) ? $p : ''; ?>>Perempuan
+         </td>
+      </tr>
+      <tr>
+         <td>Rayon</td>
+         <td> : </td>
+         <td>
+            <select name="rayon" required>
+               <?php $a = $perintah->tampil("tbl_rayon"); ?>
+               <?php foreach ($a as $r) { ?>
+                  <?php if (isset($_GET['edit'])) { ?>
                      <?php $selected = ($r["id_rayon"] == $edit['id_rayon']) ? 'selected' : ''; ?>
-                     <option value="<?= $r["id_rayon"]; ?>" <?= $selected; ?>><?= $r["rayon"]; ?></option>
                   <?php } ?>
-               </select>
-            </td>
-         </tr>
-         <tr>
-            <td>Rombel</td>
-            <td> : </td>
-            <td>
-               <select name="rombel" required>
-                  <?php $a = $perintah->tampil("tbl_rombel"); ?>
-                  <?php foreach ($a as $r) { ?>
+                  <option value="<?= $r["id_rayon"]; ?>" <?= $selected ?? ''; ?>><?= $r["rayon"]; ?></option>
+               <?php } ?>
+            </select>
+         </td>
+      </tr>
+      <tr>
+         <td>Rombel</td>
+         <td> : </td>
+         <td>
+            <select name="rombel" required>
+               <?php $a = $perintah->tampil("tbl_rombel"); ?>
+               <?php foreach ($a as $r) { ?>
+                  <?php if (isset($_GET['edit'])) { ?>
                      <?php $selected = ($r["id_rombel"] == $edit['id_rayon']) ? 'selected' : ''; ?>
-                     <option value="<?= $r["id_rombel"]; ?>"><?= $r["rombel"]; ?></option>
                   <?php } ?>
-               </select>
-            </td>
-         </tr>
-         <tr>
-            <td>Foto</td>
-            <td> : </td>
-            <td><input type="file" name="foto"></td>
-         </tr>
-         <tr>
-            <td>Tanggal Lahir</td>
-            <td> : </td>
-            <td>
-               <select name="tgl" required>
-                  <?php for ($tgl = 1; $tgl < 31; $tgl++) { ?>
+                  <option value="<?= $r["id_rombel"]; ?>"><?= $r["rombel"] ?? ''; ?></option>
+               <?php } ?>
+            </select>
+         </td>
+      </tr>
+      <tr>
+         <td>Foto</td>
+         <td> : </td>
+         <td><input type="file" name="foto"></td>
+      </tr>
+      <tr>
+         <td>Tanggal Lahir</td>
+         <td> : </td>
+         <td>
+            <select name="tgl" required>
+               <?php for ($tgl = 1; $tgl < 31; $tgl++) { ?>
+                  <?php if (isset($_GET['edit'])) { ?>
                      <?php $selected = ($tgl == $tgls) ? 'selected' : ''; ?>
-                     <?php if ($tgl <= 9) { ?>
-                        <option value="<?= "0{$tgl}"; ?>" <?= $selected; ?>><?= "0{$tgl}"; ?></option>
-                     <?php } else { ?>
-                        <option value="<?= $tgl; ?>" <?= $selected; ?>><?= $tgl; ?></option>
-                     <?php } ?>
                   <?php } ?>
-               </select>
-               <select name="bln" required>
-                  <?php for ($bln = 1; $bln < 12; $bln++) { ?>
+                  <?php if ($tgl <= 9) { ?>
+                     <option value="<?= "0{$tgl}"; ?>" <?= $selected ?? ''; ?>><?= "0{$tgl}"; ?></option>
+                  <?php } else { ?>
+                     <option value="<?= $tgl; ?>" <?= $selected ?? ''; ?>><?= $tgl; ?></option>
+                  <?php } ?>
+               <?php } ?>
+            </select>
+            <select name="bln" required>
+               <?php for ($bln = 1; $bln < 12; $bln++) { ?>
+                  <?php if (isset($_GET['edit'])) { ?>
                      <?php $selected = ($bln == $blns) ? 'selected' : ''; ?>
-                     <?php if ($bln <= 9) { ?>
-                        <option value="<?= "0{$bln}"; ?>" <?= $selected; ?>><?= "0{$bln}"; ?></option>
-                     <?php } else { ?>
-                        <option value="<?= $bln; ?>" <?= $selected; ?>><?= $bln; ?></option>
-                     <?php } ?>
                   <?php } ?>
-               </select>
-               <select name="thn" required>
-                  <?php for ($thn = 1989; $thn < 2025; $thn++) { ?>
+                  <?php if ($bln <= 9) { ?>
+                     <option value="<?= "0{$bln}"; ?>" <?= $selected ?? ''; ?>><?= "0{$bln}"; ?></option>
+                  <?php } else { ?>
+                     <option value="<?= $bln; ?>" <?= $selected ?? ''; ?>><?= $bln; ?></option>
+                  <?php } ?>
+               <?php } ?>
+            </select>
+            <select name="thn" required>
+               <?php for ($thn = 1989; $thn < 2025; $thn++) { ?>
+                  <?php if (isset($_GET['edit'])) { ?>
                      <?php $selected = ($thn == $thns) ? 'selected' : ''; ?>
-                     <option value="<?= $thn; ?>"><?= $thn; ?></option>
                   <?php } ?>
-               </select>
-            </td>
-         </tr>
-         <tr>
-            <td></td>
-            <td></td>
-            <td>
-               <?php if ($_GET['id'] == "") echo '<button type="submit" name="simpan">Simpan</button>';
-               else echo '<button type="submit" name="ubah">Ubah</button>'; ?>
-            </td>
-         </tr>
-      </table>
-   </form>
-<?php } ?>
+                  <option value="<?= $thn; ?>" <?= $selected ?? ''; ?>><?= $thn; ?></option>
+               <?php } ?>
+            </select>
+         </td>
+      </tr>
+      <tr>
+         <td></td>
+         <td></td>
+         <td>
+            <?php if (!isset($_GET['id'])) echo '<button type="submit" name="simpan">Simpan</button>';
+            else echo '<button type="submit" name="ubah">Ubah</button>'; ?>
+         </td>
+      </tr>
+   </table>
+</form>
 <br>
 <table align="center" border="1">
    <tr>
